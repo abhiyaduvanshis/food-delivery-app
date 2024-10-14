@@ -17,6 +17,9 @@ export async function POST(request){
         const image = restData.get('image')
         const city = restData.get('city')
         const location = restData.get('location')
+        const lat = restData.get('lat')
+        const lon = restData.get('lon')
+        const status = restData.get('status')
 
         if(!name){
             return NextResponse.json(
@@ -109,7 +112,10 @@ export async function POST(request){
                 location,
                 createdDate:createdDate,
                 createdBy:userId,
-                userId:userId
+                userId:userId,
+                lat,
+                lon,
+                status
             }
         )
 
@@ -156,7 +162,8 @@ export async function GET(request){
     try {
 
         const userId = await checkUserToken(request)
-        const getPartnerItem = await RestaurantModel.find()
+        
+        const getPartnerItem = await RestaurantModel.find({userId:userId})
     
         if(!getPartnerItem){
             return NextResponse.json(
@@ -191,5 +198,65 @@ export async function GET(request){
             }
         )
     }
+}
+
+
+export async function DELETE(request,{params}) {
+
+    try {
+
+        const partnerId= params?.pid
+        const userid = await checkUserToken(request)
+
+        if(!foodId){
+            return NextResponse.json(
+                {
+                    success:false,
+                    message:"Data not valid"
+                },
+                {
+                    status:401
+                }
+            )
+        }
+
+        const getFoodItem = await FoodModel.deleteOne({_id:partnerId})
+
+        if(!getFoodItem){
+            return NextResponse.json(
+                {
+                    success:false,
+                    message:"Data not found"
+                },
+                {
+                    status:401
+                }
+            )
+        }else{
+            return NextResponse.json(
+                {
+                    success:true,
+                    message:"Data not found",
+                    result:getFoodItem
+                },
+                {
+                    status:200
+                }
+            )
+        }
+        
+    } catch (error) {
+
+        return NextResponse.json(
+            {
+                success:false,
+                message:"Something went wrong"
+            },
+            {
+                status:401
+            }
+        )
+    }
+    
 }
 

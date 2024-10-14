@@ -6,7 +6,7 @@ const secret = process.env.ACCESS_TOKEN_SECRET
 export async function middleware(req) {
 
   const currentUser = cookies().get('accessToken')
-  const logedinUserNotAccessPath = req.nextUrl.pathname === '/restaurant/login' 
+  const logedinUserNotAccessPath = req.nextUrl.pathname === '/dashboard/login' 
 
   if(logedinUserNotAccessPath){
     if(currentUser){
@@ -14,12 +14,12 @@ export async function middleware(req) {
     }
   }else{
     if(!currentUser){
-      return NextResponse.redirect(new URL('/restaurant/login', req.url))
+      return NextResponse.redirect(new URL('/dashboard/login', req.url))
     }
   }
 
 }
 
 export const config = {
-  matcher: ['/restaurant/login','/','/dashboard'],
+  matcher: ['/dashboard/login','/','/dashboard'],
 }

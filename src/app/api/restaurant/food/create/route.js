@@ -20,6 +20,7 @@ export async function POST(request) {
         const image = formRequestData.get('image')
         const offerPrice = formRequestData.get('offerPrice')
         const available = formRequestData.get('available')
+        const foodCat = formRequestData.get('foodCat')
 
         if(!name){
             return NextResponse.json(
@@ -74,7 +75,8 @@ export async function POST(request) {
             offerPrice,
             available,
             createdDate:createdDate,
-            createdBy:userid
+            createdBy:userid,
+            foodCat
         })
 
         const createFood = await foodData.save()

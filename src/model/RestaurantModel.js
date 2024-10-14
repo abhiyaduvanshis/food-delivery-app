@@ -16,11 +16,20 @@ const RestaurantSchema= new Schema({
     image:{
         type:String
     },
+    lat:{
+        type:String
+    },
+    lon:{
+        type:String
+    },
     city:{
         type:String
     },
     location:{
         type:String
+    },
+    status:{
+        type:Number
     },
     createdDate:{
         type:Date,

@@ -6,7 +6,7 @@ import fs from "node:fs/promises";
 
 await dbConnect()
 
-export async function POST(request,{params}) {
+export async function PUT(request,{params}) {
    
 
     try {
@@ -23,6 +23,7 @@ export async function POST(request,{params}) {
         const image = formRequestData.get('image')
         const offerPrice = formRequestData.get('offerPrice')
         const available = formRequestData.get('available')
+        const foodCat = formRequestData.get('foodCat')
 
         if(!name){
             return NextResponse.json(
@@ -79,7 +80,8 @@ export async function POST(request,{params}) {
                     offerPrice,
                     available,
                     modefiedDate:createdDate,
-                    modefiedBy:userid
+                    modefiedBy:userid,
+                    foodCat
                 }
             }
         )
@@ -180,6 +182,64 @@ export async function GET(request,{params}) {
             }
         )
     }
+    
+}
 
+export async function DELETE(request,{params}) {
+
+    try {
+
+        const foodId = params.foodId
+        const userid = await checkUserToken(request)
+
+        if(!foodId){
+            return NextResponse.json(
+                {
+                    success:false,
+                    message:"Data not valid"
+                },
+                {
+                    status:401
+                }
+            )
+        }
+
+        const getFoodItem = await FoodModel.deleteOne({_id:foodId})
+
+        if(!getFoodItem){
+            return NextResponse.json(
+                {
+                    success:false,
+                    message:"Data not found"
+                },
+                {
+                    status:401
+                }
+            )
+        }else{
+            return NextResponse.json(
+                {
+                    success:true,
+                    message:"Data not found",
+                    result:getFoodItem
+                },
+                {
+                    status:200
+                }
+            )
+        }
+        
+    } catch (error) {
+
+        return NextResponse.json(
+            {
+                success:false,
+                message:"Something went wrong"
+            },
+            {
+                status:401
+            }
+        )
+    }
     
 }

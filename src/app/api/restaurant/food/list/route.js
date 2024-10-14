@@ -10,8 +10,7 @@ export async function GET(request) {
     try {
 
         const userid = await checkUserToken(request)
-
-        console.log(userid)
+        
         const getFoodItem = await FoodModel.find({restaurant:userid})
 
         if(!getFoodItem){

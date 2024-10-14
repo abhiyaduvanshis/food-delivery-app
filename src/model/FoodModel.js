@@ -6,6 +6,10 @@ const FoodSchema = new Schema({
         type:Schema.Types.ObjectId,
         ref:"User"
     },
+    foodCat:{
+        type:Schema.Types.ObjectId,
+        ref:"Category"
+    },
     name:{
         type:String,
         require:[true,'Food name is required'], 

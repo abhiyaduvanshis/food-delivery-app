@@ -60,6 +60,10 @@ export async function PUT(request,{params}){
         const image = restData.get('image')
         const city = restData.get('city')
         const location = restData.get('location')
+        const lat = restData.get('lat')
+        const lon = restData.get('lon')
+        const status = restData.get('status')
+        
 
         if(!name){
             return NextResponse.json(
@@ -171,7 +175,10 @@ export async function PUT(request,{params}){
                     location,
                     modifiedDate:createdDate,
                     updatedBy:userId,
-                    userId:userId
+                    userId:userId,
+                    lat,
+                    lon,
+                    status
                 }
             }
             

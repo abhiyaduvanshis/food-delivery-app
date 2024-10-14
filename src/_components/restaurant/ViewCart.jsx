@@ -12,7 +12,7 @@ const RestaurantFood=()=>{
     useEffect(()=>{
         async function fetchData() {
             try {
-                const response = await userService.getListData('restaurant/food/list')
+                const response = await userService.getRestaurentFood()
                 setFoodList(response?.data?.result)
             } catch (error) {
                 setError(error.message);
