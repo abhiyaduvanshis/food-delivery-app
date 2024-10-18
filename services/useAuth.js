@@ -3,6 +3,8 @@ import { jwtDecode } from "jwt-decode";
 
 const API_URL = process.env.NEXT_PUBLIC_END_POINT_URL
 
+console.log(API_URL)
+
 const RestaurantLogin= async(postData)=>{
     try {
         const response = await axios.post(API_URL+'restaurant/signIn',postData)
