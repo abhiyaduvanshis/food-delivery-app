@@ -28,6 +28,9 @@ const RestaurantSchema= new Schema({
     location:{
         type:String
     },
+    address:{
+        type:String
+    },
     status:{
         type:Number
     },
@@ -40,7 +43,8 @@ const RestaurantSchema= new Schema({
         default:Date.now
     },
     updatedBy:{
-        type:String,
+        type:Schema.Types.ObjectId,
+        ref:"User"
     }
     
 })

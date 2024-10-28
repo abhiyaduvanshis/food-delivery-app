@@ -8,7 +8,6 @@ await dbConnect()
 
 export async function PUT(request,{params}) {
    
-
     try {
 
         const foodId = params.foodId
@@ -24,6 +23,7 @@ export async function PUT(request,{params}) {
         const offerPrice = formRequestData.get('offerPrice')
         const available = formRequestData.get('available')
         const foodCat = formRequestData.get('foodCat')
+        const restaurant = formRequestData.get('restaurant')
 
         if(!name){
             return NextResponse.json(
@@ -73,6 +73,7 @@ export async function PUT(request,{params}) {
             foodId,
             {
                 $set:{
+                    restaurant,
                     name,
                     description,
                     price,
@@ -220,7 +221,7 @@ export async function DELETE(request,{params}) {
             return NextResponse.json(
                 {
                     success:true,
-                    message:"Data not found",
+                    message:"Data delete successfully",
                     result:getFoodItem
                 },
                 {

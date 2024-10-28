@@ -19,6 +19,7 @@ export async function POST(request){
         const location = restData.get('location')
         const lat = restData.get('lat')
         const lon = restData.get('lon')
+        const address = restData.get('address')
         const status = restData.get('status')
 
         if(!name){
@@ -113,6 +114,7 @@ export async function POST(request){
                 createdDate:createdDate,
                 createdBy:userId,
                 userId:userId,
+                address,
                 lat,
                 lon,
                 status

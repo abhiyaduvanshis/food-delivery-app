@@ -12,6 +12,7 @@ export async function GET(request,{params}){
         const partnerId= params?.pid
 
         const userId = await checkUserToken(request)
+        
         const getPartnerItem = await RestaurantModel.find({ $and: [ {userId:userId},{_id:partnerId} ] })
     
         if(!getPartnerItem){
@@ -60,6 +61,7 @@ export async function PUT(request,{params}){
         const image = restData.get('image')
         const city = restData.get('city')
         const location = restData.get('location')
+        const address = restData.get('address')
         const lat = restData.get('lat')
         const lon = restData.get('lon')
         const status = restData.get('status')
@@ -80,7 +82,6 @@ export async function PUT(request,{params}){
 
         const checkRestName = await RestaurantModel.find({$and:[{name:name} ,{userId:{$ne:userId}}]})
 
-        // console.log(checkRestName.length)
         if(checkRestName.length > 0){
             return NextResponse.json(
                 {
@@ -129,18 +130,7 @@ export async function PUT(request,{params}){
             )
         }
 
-        
-        if(!image){
-            return NextResponse.json(
-                {
-                    success:false,
-                    message:'Image is required'
-                },
-                {
-                    status:401
-                }
-            )
-        }
+
 
         if(image){
             const arrayBuffer = await image.arrayBuffer();
@@ -148,20 +138,7 @@ export async function PUT(request,{params}){
             await fs.writeFile(`./public/resturant/partner/${image?.name}`, buffer);
         }
 
-        // const submitData = new RestaurantModel(
-        //     {
-        //         name,
-        //         description,
-        //         image:image?.name,
-        //         city,
-        //         location,
-        //         createdDate:createdDate,
-        //         createdBy:userId,
-        //         userId:userId
-        //     }
-        // )
 
-        // const createData = await submitData.save()
 
         const createdDate = new Date()
         
@@ -176,6 +153,7 @@ export async function PUT(request,{params}){
                     modifiedDate:createdDate,
                     updatedBy:userId,
                     userId:userId,
+                    address,
                     lat,
                     lon,
                     status
@@ -220,6 +198,56 @@ export async function PUT(request,{params}){
 }
 
 
-export async function DELETE(request){
+export async function DELETE(request,{params}) {
+    try {
+        const rid = params.pid
+        const userid = await checkUserToken(request)
+        console.log(rid)
+        if(!rid){
+            return NextResponse.json(
+                {
+                    success:false,
+                    message:"Data not valid"
+                },
+                {
+                    status:401
+                }
+            )
+        }
+        const getRestItem = await RestaurantModel.deleteOne({_id:rid})
 
+        console.log(getRestItem)
+        if(!getRestItem){
+            return NextResponse.json(
+                {
+                    success:false,
+                    message:"Data not found"
+                },
+                {
+                    status:401
+                }
+            )
+        }else{
+            return NextResponse.json(
+                {
+                    success:true,
+                    message:"Data delete successfully",
+                    result:getRestItem
+                },
+                {
+                    status:200
+                }
+            )
+        }
+    } catch (error) {
+        return NextResponse.json(
+            {
+                success:false,
+                message:"Something went wrong"
+            },
+            {
+                status:401
+            }
+        )
+    }
 }

@@ -7,7 +7,7 @@ const FoodSchema = new Schema({
         ref:"User"
     },
     foodCat:{
-        type:Schema.Types.ObjectId,
+        type:String,
         ref:"Category"
     },
     name:{
@@ -29,7 +29,7 @@ const FoodSchema = new Schema({
         type:String,
     },
     available:{
-        type:Boolean
+        type:Number
     },
     createdDate:{
         type:Date,

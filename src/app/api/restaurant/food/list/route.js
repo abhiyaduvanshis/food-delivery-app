@@ -11,7 +11,7 @@ export async function GET(request) {
 
         const userid = await checkUserToken(request)
         
-        const getFoodItem = await FoodModel.find({restaurant:userid})
+        const getFoodItem = await FoodModel.find({createdBy:userid})
 
         if(!getFoodItem){
             return NextResponse.json(

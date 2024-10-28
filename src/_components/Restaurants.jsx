@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion"
 import { FaMapMarker,FaClock,FaStar } from "react-icons/fa";
 import axios from "axios";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 const Restaurants=()=>{
 
+    const {city} = useParams()
     const [resturantList,setresturantList] = useState([])
 
     useEffect(()=>{
@@ -67,22 +70,24 @@ const Restaurants=()=>{
             {resturantList.map((item,index)=>{
                 return (
                     <div className="border rounded-md group" key={index}>
-                        <div className="p-3">
-                            <div className="rounded-md overflow-hidden">
-                                <img src={`/resturant/partner/${item.image}`} className="rounded-md hover:scale-125 transition-all duration-500 cursor-pointer"/>
-                            </div>
-                            <div className="flex mt-2">
-                                <h2 className="text-black font-bold w-full">{item.name} <span className="text-black font-bold float-right flex justify-between items-center gap-1"><FaStar className="text-sm text-green-500"/> 3.9</span></h2>
-                            </div>
-                            <div className="w-full mt-2">
-                                <p className="text-gray-500">{item.description}</p>
-                            </div>
-                            <div className="w-full border border-dashed mt-2"></div>
-                            <div className="flex mt-2 justify-between">
-                                <div className="flex float-left justify-between items-center gap-1"><span><FaMapMarker className="text-sm text-orange-400"/> </span> 3.9 km</div>
-                                <div className="flex float-right justify-between items-center gap-1"><span><FaClock className="text-sm text-orange-400"/> </span>35 min</div>
-                            </div>
-                        </div>
+                        <Link href={`/${city}/${item._id}`}>
+                          <div className="p-3">
+                              <div className="rounded-md overflow-hidden">
+                                  <img src={`/resturant/partner/${item.image}`} className="rounded-md hover:scale-125 transition-all duration-500 cursor-pointer"/>
+                              </div>
+                              <div className="flex mt-2">
+                                  <h2 className="text-black font-bold w-full">{item.name} <span className="text-black font-bold float-right flex justify-between items-center gap-1"><FaStar className="text-sm text-green-500"/> 3.9</span></h2>
+                              </div>
+                              <div className="w-full mt-2">
+                                  <p className="text-gray-500">{item.description}</p>
+                              </div>
+                              <div className="w-full border border-dashed mt-2"></div>
+                              <div className="flex mt-2 justify-between">
+                                  <div className="flex float-left justify-between items-center gap-1"><span><FaMapMarker className="text-sm text-orange-400"/> </span> 3.9 km</div>
+                                  <div className="flex float-right justify-between items-center gap-1"><span><FaClock className="text-sm text-orange-400"/> </span>35 min</div>
+                              </div>
+                          </div>
+                        </Link>
                     </div>
                 )
             })}    

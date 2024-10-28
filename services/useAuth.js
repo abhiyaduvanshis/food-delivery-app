@@ -3,8 +3,6 @@ import { jwtDecode } from "jwt-decode";
 
 const API_URL = process.env.NEXT_PUBLIC_END_POINT_URL
 
-console.log(API_URL)
-
 const RestaurantLogin= async(postData)=>{
     try {
         const response = await axios.post(API_URL+'restaurant/signIn',postData)
@@ -31,9 +29,23 @@ const RestaurantResgister= async(formData)=>{
     }
 }
 
+const UserLogOut=async()=>{
+ try {
+        const response = await axios.delete(API_URL+'logout')
+        if(response?.data?.success===true){
+            localStorage.clear();
+        }
+        return response
+    } catch (error) {
+        return error
+    }
+    
+}
+
 const AuthService = {
     RestaurantLogin,
-    RestaurantResgister
+    RestaurantResgister,
+    UserLogOut
 }
 
 export default AuthService

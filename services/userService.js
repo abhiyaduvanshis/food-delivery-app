@@ -42,6 +42,7 @@ const updateFoodFormData =async(apiCallUrl,inputForm,id,foodImage)=>{
         const token = localStorage.getItem('accessToken')
 
         const formData = new FormData()
+        formData.append('restaurant', inputForm.restaurant)
         formData.append('foodCat', inputForm.foodCat)
         formData.append('name', inputForm.name)
         formData.append('description', inputForm.description)
@@ -50,9 +51,9 @@ const updateFoodFormData =async(apiCallUrl,inputForm,id,foodImage)=>{
         formData.append('available', inputForm.available)
         formData.append('image', foodImage)
 
-        const response = await axios.put(API_URL+'/'+apiCallUrl,formData,id,{
+        const response = await axios.put(API_URL+'/'+apiCallUrl,formData,{
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${token}`
             }
         })
@@ -68,6 +69,7 @@ const addFoodFormData =async(apiCallUrl,inputForm,foodImage)=>{
         const token = localStorage.getItem('accessToken')
 
         const formData = new FormData()
+        formData.append('restaurant', inputForm.restaurant)
         formData.append('foodCat', inputForm.foodCat)
         formData.append('name', inputForm.name)
         formData.append('description', inputForm.description)
@@ -78,7 +80,7 @@ const addFoodFormData =async(apiCallUrl,inputForm,foodImage)=>{
 
         const response = await axios.post(API_URL+'/'+apiCallUrl,formData,{
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${token}`
             }
         })
@@ -104,15 +106,82 @@ const addFoodFormData =async(apiCallUrl,inputForm,foodImage)=>{
 //     }
 // }
 
+const deleteItemById=(apiCallUrl)=>{
+    try {
+        const token = localStorage.getItem('accessToken')
+        const response = axios.delete(API_URL+'/'+apiCallUrl,{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        return response
+    } catch (error) {
+        return error
+    }
+}
 
+const addRestFormData =async(apiCallUrl,inputForm,foodImage)=>{
+    try {
+        const token = localStorage.getItem('accessToken')
+        const formData = new FormData()
+        formData.append('name', inputForm.name)
+        formData.append('description', inputForm.description)
+        formData.append('lat', inputForm.lat)
+        formData.append('lon', inputForm.lon)
+        formData.append('city', inputForm.city)
+        formData.append('location', inputForm.location)
+        formData.append('address', inputForm.address)
+        formData.append('status', inputForm.status)
+        formData.append('image', foodImage)
+        const response = await axios.post(API_URL+'/'+apiCallUrl,formData,{
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        return response
+    } catch (error) {
+        return error
+    }
+    
+}
 
+const updateRestFormData =async(apiCallUrl,inputForm,foodImage)=>{
+    try {
+        const token = localStorage.getItem('accessToken')
 
+        const formData = new FormData()
+        formData.append('name', inputForm.name)
+        formData.append('description', inputForm.description)
+        formData.append('lat', inputForm.lat)
+        formData.append('lon', inputForm.lon)
+        formData.append('city', inputForm.city)
+        formData.append('location', inputForm.location)
+        formData.append('address', inputForm.address)
+        formData.append('status', inputForm.status)
+        formData.append('image', foodImage)
 
+        const response = await axios.put(API_URL+'/'+apiCallUrl,formData,{
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        return response
+
+    } catch (error) {
+        return error
+    }
+}
 
 const userService = {
     getListData,
     addFoodFormData,
-    updateFoodFormData
+    updateFoodFormData,
+    deleteItemById,
+    addRestFormData,
+    updateRestFormData
 }
 
 export default userService

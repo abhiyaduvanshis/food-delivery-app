@@ -21,6 +21,7 @@ export async function POST(request) {
         const offerPrice = formRequestData.get('offerPrice')
         const available = formRequestData.get('available')
         const foodCat = formRequestData.get('foodCat')
+        const restaurant = formRequestData.get('restaurant')
 
         if(!name){
             return NextResponse.json(
@@ -67,7 +68,7 @@ export async function POST(request) {
         const createdDate = new Date()
 
         const foodData = new FoodModel({
-            restaurant:userid,
+            restaurant,
             name,
             description,
             price,

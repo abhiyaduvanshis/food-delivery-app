@@ -1,13 +1,18 @@
 
 "use client"
+import { useRouter }  from "next/navigation";
 import { useState,useEffect,memo, useMemo } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import Location from "./Location";
 import { useAuthenticationContext } from "@/context/AuthenticationProvider";
 import Link from "next/link";
+import AuthService from "../../services/useAuth";
+import { toast } from "react-toastify";
+
 
 const Header=()=>{
 
+    const router = useRouter()
     const [isVisible,setisVisible] = useState(false)
 
     const {loginData, loading, error}  = useAuthenticationContext()
@@ -18,6 +23,13 @@ const Header=()=>{
     useMemo(()=>{
        return  dropdownMenu()
     },[])
+
+    const logout = () =>{
+        const response = AuthService.UserLogOut()
+        console.log(response)
+        toast(response?.data?.message)
+        router.push(`/dashboard/login`)
+    }
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error}</p>
@@ -71,7 +83,7 @@ const Header=()=>{
                                     <li className="font-normal text-sm hover:text-orange-400 p-1"><Link href="">Profile</Link></li>
                                     <li className="font-normal text-sm hover:text-orange-400 p-1"><Link href="">My Order</Link></li>
                                     <li className="font-normal text-sm hover:text-orange-400 p-1"><Link href="">Save Address</Link></li>
-                                    <li className="font-normal text-sm hover:text-orange-400 p-1"><Link href="">LogOut</Link></li>
+                                    <li className="font-normal text-sm hover:text-orange-400 p-1" onClick={logout}>LogOut</li>
                                 </ul>
                             </div>
                         </div>
