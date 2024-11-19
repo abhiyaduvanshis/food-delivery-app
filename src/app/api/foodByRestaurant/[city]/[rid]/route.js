@@ -67,6 +67,8 @@ export async function GET(request,{params}) {
                 $group: {
                   _id: "$foodCat", 
                   foodlist : { $push: {
+                    foodId:"$_id",
+                    restId:"$restaurant",
                     name:"$name",
                     description:"$description",
                     image:"$image",

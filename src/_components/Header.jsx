@@ -10,18 +10,22 @@ import AuthService from "../../services/useAuth";
 import { toast } from "react-toastify";
 
 
-const Header=()=>{
+const Header=({cartItem,removeItem})=>{
 
     const router = useRouter()
+    const [cartStorage, setStoredValue] = useState('');
     const [isVisible,setisVisible] = useState(false)
-
+    const [itemCount,setItemCount] = useState(cartStorage?.length)
+    const [cartData,setCartData] = useState(cartStorage)
+    
     const {loginData, loading, error}  = useAuthenticationContext()
 
     const dropdownMenu = () =>{
         setisVisible(!isVisible)
     }
+
     useMemo(()=>{
-       return  dropdownMenu()
+       return dropdownMenu()
     },[])
 
     const logout = () =>{
@@ -31,8 +35,63 @@ const Header=()=>{
         router.push(`/dashboard/login`)
     }
 
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const cartValue = JSON.parse(localStorage.getItem('cart'))
+            setStoredValue(JSON.parse(localStorage.getItem('cart')));
+            setItemCount(cartValue?.length)
+            setCartData(cartValue)
+        }
+     }, []);
+
+    useEffect(()=>{
+        if(cartItem){
+            if(itemCount){
+                if(cartItem.restId !== cartData[0].restId){
+                    localStorage.removeItem('cart');
+                    setCartData([cartItem])
+                    cartItem.quantity =1
+                    localStorage.setItem('cart',JSON.stringify([cartItem]))
+                    setItemCount(1)
+                }else{
+                    let localStorageCart=cartData
+                    cartItem.quantity =1
+                    localStorageCart.push(JSON.parse(JSON.stringify(cartItem)))
+                    setCartData(localStorageCart)
+                    localStorage.setItem('cart',JSON.stringify(localStorageCart))
+                    setItemCount(itemCount+1)
+                }
+            }else{
+                setItemCount(1)
+                setCartData([cartItem])
+                cartItem.quantity =1
+                localStorage.setItem('cart',JSON.stringify([cartItem]))
+            }
+        }
+    },[cartItem])
+
+
+    useEffect(()=>{
+        if(removeItem){
+            let localDataFilter = cartData.filter((item)=>{
+                return item.foodId !==removeItem
+            })
+            setCartData(localDataFilter)
+            setItemCount(itemCount-1)
+            localStorage.setItem('cart',JSON.stringify(localDataFilter))
+            if(localDataFilter.length==0){
+                localStorage.removeItem('cart')
+            }
+        }
+    },[removeItem])
+
+
+
+
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error}</p>
+
+
 
     return (
         <header className=" py-2 xl:py-2 w-full bg-[#222021]" >
@@ -67,7 +126,19 @@ const Header=()=>{
                     <div className="flex justify-between items-center gap-5">
                         <div className="flex static relative">
                             <FaShoppingCart className="text-white text-1" /> 
-                            <span className="absolute bg-orange-400 rounded-full w-4 h-4 text-xs text-center right-[-7px] top-[-8px]">2</span>
+                            <span 
+                            className="
+                            absolute 
+                            bg-orange-400 
+                            rounded-full 
+                            w-4 
+                            h-4 
+                            text-xs 
+                            text-center 
+                            right-[-7px] 
+                            top-[-8px]">
+                                {itemCount?itemCount:0}
+                            </span>
                         </div>
                         <div  className="text-white/50 text-sm"> | </div>
                         <div className="flex gap-2">
