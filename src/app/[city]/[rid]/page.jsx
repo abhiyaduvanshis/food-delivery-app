@@ -9,7 +9,7 @@ export default function page() {
 
   const [cartData,setCartData] = useState()
   const [removeCartData,setremoveCartData] = useState()
-  const [cartStorageData,setcartStorageData] = useState([])
+  // const [cartStorageData,setcartStorageData] = useState([])
   const [cartIds,setcartIds] = useState([])
   
 
@@ -20,14 +20,14 @@ export default function page() {
     localStorageData?.map((valueItem)=>{
       localStorageCart.push(valueItem.foodId)
     })
-    setcartIds(localStorageCart)
-
+    setremoveCartData()
   }
 
   const removeToCart=(id)=>{
     setremoveCartData(id)
     const localIds = cartIds.filter(item=>item!==id)
-    setcartIds(localIds)
+    setCartData()
+ 
   }
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function page() {
         }
       )
       setcartIds(localStorageCart)
-      setcartStorageData(cartValue)
+      // setcartStorageData(cartValue)
       
     }
  }, [cartData,removeCartData]);
