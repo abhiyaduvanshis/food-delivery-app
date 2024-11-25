@@ -29,7 +29,14 @@ const UserLogin=()=>{
           const response = await AuthService.RestaurantLogin(formValue)
           if(response.data.success===true){
             toast(response.data.message);
-            router.push(`/dashboard`)
+            console.log(response.data.userRole)
+            if(response.data.userRole===1){
+              router.push(`/food_partner/dashboard`)
+            }else if(response.data.userRole===2){
+              router.push(`/delivery_partner/dashboard`)
+            }else{
+              router.push(`/`)
+            }
           }else{
             toast(response.data.message);
           }
@@ -57,7 +64,7 @@ const UserLogin=()=>{
           <div className="lg:w-1/2">
             <div className="p-8 rounded-lg items-center">
               <h1 className="m-2 font-semibold text-3xl">User Login</h1>
-              <Link href='/restaurant/signup' className="m-2 font-semibold text-lg ">or <span className="text-orange-400">create an a account</span></Link>
+              <Link href='/dashboard/signup' className="m-2 font-semibold text-lg ">or <span className="text-orange-400">create an a account</span></Link>
               <form className="mt-4" onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <input

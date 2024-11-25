@@ -40,6 +40,8 @@ export async function POST(request) {
 
         const userCheck = await UserModel.findOne({email:email})
 
+        // console.log(userCheck)
+
         if(!userCheck){
             return NextResponse.json(
                 {
@@ -90,7 +92,8 @@ export async function POST(request) {
             {
                 success:true,
                 message:'User Login successfully',
-                accessToken:token
+                accessToken:token,
+                userRole:userCheck.userRole
             },
             {
                 status:200

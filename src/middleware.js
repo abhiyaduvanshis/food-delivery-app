@@ -14,12 +14,12 @@ export async function middleware(req) {
     }
   }else{
     if(!currentUser){
-      return NextResponse.redirect(new URL('/dashboard/login', req.url))
+      return NextResponse.redirect(new URL('/login', req.url))
     }
   }
 
 }
 
 export const config = {
-  matcher: ['/dashboard/login','/','/dashboard'],
+  matcher: ['/','/dashboard/food/:path','/dashboard/restaurant/:path*','/dashboard/food/:path*'],
 }

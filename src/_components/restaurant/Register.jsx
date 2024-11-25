@@ -6,9 +6,13 @@ import AuthService from "../../../services/useAuth";
 import { toast } from "react-toastify";
 
 
-const Register=()=>{
+const Register=({roleType})=>{
 
   const router = useRouter()
+
+  console.log(roleType)
+
+ 
 
   const [formValue,setFormValue] = useState({
       name:'',
@@ -17,6 +21,7 @@ const Register=()=>{
       phone:'',
       city:'',
       address:'',
+      userRole:1
   })
 
   const [message,setMessage] = useState(null)
@@ -34,7 +39,7 @@ const Register=()=>{
         const response = await AuthService.RestaurantResgister(formValue)
         if(response.data.success===true){
           toast(response.data.message)
-          router.push(`/restaurant/login`)
+          router.push(`/login`)
         }else{
           toast(response.data.message)
         }
@@ -77,8 +82,10 @@ const Register=()=>{
           <div className="lg:w-1/2">
             <div className="p-8 rounded-lg items-center">
               <h1 className="m-2 font-semibold text-3xl">Sign up</h1>
-              <Link href='/restaurant/login' className="m-2 font-semibold text-lg ">or <span className="text-orange-400">login to your account</span></Link>
+              <Link href='/dashboard/login' className="m-2 font-semibold text-lg ">or <span className="text-orange-400">login to your account</span></Link>
               <form className="mt-4" onSubmit={handleSubmit}>
+
+                <input type="hidden" name="userRole" value={roleType}/>
 
                 <div className="mb-4">
                   <input

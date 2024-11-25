@@ -32,7 +32,7 @@ const Header=({cartItem,removeItem})=>{
         const response = AuthService.UserLogOut()
         console.log(response)
         toast(response?.data?.message)
-        router.push(`/dashboard/login`)
+        router.push(`/login`)
     }
 
     useEffect(() => {
@@ -43,6 +43,7 @@ const Header=({cartItem,removeItem})=>{
             setCartData(cartValue)
         }
      }, []);
+
 
     useEffect(()=>{
         if(cartItem){
@@ -104,22 +105,21 @@ const Header=({cartItem,removeItem})=>{
                         <Location/>
                     </div>
                 </div>
+
+                
               
-                <div className="">
-                {/* <ul>
+                <div className={`${loginData ? 'hidden' : 'block'}`} >
+                    <ul className="inline-flex gap-4 text-white">
                         <li>
-                            Home
+                            <Link href="/customer/signup">Customer SignUp</Link>
                         </li>
                         <li>
-                            Order
+                            <Link href="/food_partner/signup">Resturant SignUp</Link>
                         </li>
                         <li>
-                            About Us
+                            <Link href="/delivery_partner/signup">Delivery Partner SignUp</Link>
                         </li>
-                        <li>
-                            Contact Us
-                        </li>
-                    </ul> */}
+                    </ul>
                 </div>
 
                 <div className="hidden xl:block">

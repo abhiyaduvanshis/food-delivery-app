@@ -1,9 +1,8 @@
 "use client"
-import { FaTruckPickup,FaMapMarked  } from "react-icons/fa";
 import { motion } from "framer-motion"
 
 const Banner=()=>{
-    console.log('ihsgfi')
+
     return (
         <section className="bg-[url('/assets/images/bg-SYBVHDZT.jpg')] pt-36">
             <div className="xl:w-1/2 mx-auto text-center">

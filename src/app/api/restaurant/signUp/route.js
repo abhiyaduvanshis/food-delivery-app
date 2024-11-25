@@ -120,7 +120,8 @@ export async function POST(request) {
                 phone:formData.phone,
                 city:formData.city,
                 address:formData.address,
-                createdDate:createdDate
+                createdDate:createdDate,
+                userRole:formData.userRole,
             }
         )
         const createUser = await userData.save()

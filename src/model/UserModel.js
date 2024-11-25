@@ -32,6 +32,9 @@ const UserSchema = new Schema({
     updatedBy:{
         type:Schema.Types.ObjectId,
         ref:"User"
+    },
+    userRole:{
+        type:Number,
     }
 })
 
