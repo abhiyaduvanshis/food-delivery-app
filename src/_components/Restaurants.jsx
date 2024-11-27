@@ -16,10 +16,12 @@ const Restaurants=()=>{
   
           const API_URL = process?.env?.NEXT_PUBLIC_END_POINT_URL;
           const token = localStorage.getItem('accessToken')
+          const getCity = JSON.parse(localStorage.getItem('userLocation'))
+
           try {
   
             const response = await axios.get(
-              API_URL+'restaurant/partner',
+              API_URL+'restaurant/partner/city/'+getCity?.city.toLowerCase(),
                 {
                   headers:{
                     "Content-Type":"application/json",
@@ -70,7 +72,7 @@ const Restaurants=()=>{
             {resturantList.map((item,index)=>{
                 return (
                     <div className="border rounded-md group" key={index}>
-                        <Link href={`/${city}/${item._id}`}>
+                        <Link href={`/${city ? city : item.city }/${item._id}`}>
                           <div className="p-3">
                               <div className="rounded-md overflow-hidden">
                                   <img src={`/resturant/partner/${item.image}`} className="rounded-md hover:scale-125 transition-all duration-500 cursor-pointer"/>

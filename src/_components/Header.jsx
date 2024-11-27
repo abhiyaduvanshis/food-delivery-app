@@ -87,43 +87,56 @@ const Header=({cartItem,removeItem})=>{
     },[removeItem])
 
 
-
-
-    if (loading) return <p>Loading...</p>
+    if (loading) return <p></p>
     if (error) return <p>Error: {error}</p>
-
-
 
     return (
         <header className=" py-2 xl:py-2 w-full bg-[#222021]" >
             <div className="container mx-auto flex justify-between items-center">
                 <div className="gap-4 flex justify-between items-center">
                     <div>
-                        <h2 className="text-white font-bold text-3xl uppercase italic">Zomo <span className="text-orange-400">.</span></h2>
+                        <Link href="/">
+                            <h2 className="text-white font-bold text-3xl uppercase italic">
+                                Zomo <span className="text-orange-400">.</span>
+                            </h2>
+                        </Link>
                     </div>
-                    <div className="">
-                        <Location/>
+                    {loginData ? <Location/> : '' }
+                </div>
+                {loginData ?
+                    ''
+                : 
+                    <div className='' >
+                        <ul className="inline-flex gap-4 text-white">
+                            <li>
+                                <Link href="/customer/signup">Customer SignUp</Link>
+                            </li>
+                            <li>
+                                <Link href="/food_partner/signup">Resturant SignUp</Link>
+                            </li>
+                            <li>
+                                <Link href="/delivery_partner/signup">Delivery Partner SignUp</Link>
+                            </li>
+                        </ul>
                     </div>
-                </div>
+                }    
 
-                
-              
-                <div className={`${loginData ? 'hidden' : 'block'}`} >
-                    <ul className="inline-flex gap-4 text-white">
-                        <li>
-                            <Link href="/customer/signup">Customer SignUp</Link>
-                        </li>
-                        <li>
-                            <Link href="/food_partner/signup">Resturant SignUp</Link>
-                        </li>
-                        <li>
-                            <Link href="/delivery_partner/signup">Delivery Partner SignUp</Link>
-                        </li>
-                    </ul>
-                </div>
+               
 
+                {loginData ?     
                 <div className="hidden xl:block">
                     <div className="flex justify-between items-center gap-5">
+                            {loginData ? 
+                            <div>
+                                <ul className="inline-flex gap-4 text-white">
+                                    <li>
+                                        <Link href="/food_partner/dashboard">DashBoard</Link>
+                                    </li>
+                                </ul>
+                            </div> 
+                        : 
+                            ''
+                        }
                         <div className="flex static relative">
                             <FaShoppingCart className="text-white text-1" /> 
                             <span 
@@ -154,12 +167,13 @@ const Header=({cartItem,removeItem})=>{
                                     <li className="font-normal text-sm hover:text-orange-400 p-1"><Link href="">Profile</Link></li>
                                     <li className="font-normal text-sm hover:text-orange-400 p-1"><Link href="">My Order</Link></li>
                                     <li className="font-normal text-sm hover:text-orange-400 p-1"><Link href="">Save Address</Link></li>
-                                    <li className="font-normal text-sm hover:text-orange-400 p-1" onClick={logout}>LogOut</li>
+                                    <li className="font-normal text-sm hover:text-orange-400 p-1" onClick={logout}><Link href="#">LogOut</Link></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+                : '' }
                 
             </div>
         </header>

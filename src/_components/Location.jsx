@@ -1,11 +1,12 @@
 "use client"
+import { useRouter }  from "next/navigation";
 import axios from "axios";
-import { stringify } from "querystring";
 import { useState,useEffect } from "react";
 import { FaMapMarker } from "react-icons/fa";
-axios
-const Location=()=>{
+import AllowLocationPopup from "./AllowLocationPopup";
 
+const Location=()=>{
+    const router = useRouter()
     const [userCurrentLocation,setUserCurrentLocation]= useState({
         city:null,
         address:null,
@@ -34,7 +35,6 @@ const Location=()=>{
                         'city':locationResponse.data.address.city
                     }
                     localStorage.setItem('userLocation',JSON.stringify(lodationInfo))
-
                 } catch (error) {
                     setUserCurrentLocation({ ...userCurrentLocation, error: "Geolocation not supported" });
                 }
@@ -53,6 +53,11 @@ const Location=()=>{
             setsaveLocationData(JSON.parse(storedData));
         }
       }, [userCurrentLocation]); 
+
+
+    // useEffect(()=>{
+    //     const getlocation = getCurrentLocation()
+    // },[])  
 
 
     return (
@@ -79,7 +84,10 @@ const Location=()=>{
             (
                 <>{saveLocationData.city}</>
             ):(
-                <> <FaMapMarker className="text-sm"/>Location </> 
+                <> 
+                <FaMapMarker className="text-sm"/>Location 
+                <AllowLocationPopup clickLocation={getCurrentLocation} />
+                </> 
             )}
 
         </button>

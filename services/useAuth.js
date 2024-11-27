@@ -6,13 +6,13 @@ const API_URL = process.env.NEXT_PUBLIC_END_POINT_URL
 const RestaurantLogin= async(postData)=>{
     try {
         const response = await axios.post(API_URL+'restaurant/signIn',postData)
-
         if(response?.data?.success===true){
             const token = jwtDecode(response.data.accessToken)
             localStorage.setItem('accessToken',response.data.accessToken);
             localStorage.setItem('name',token.user?.name);
             localStorage.setItem('email',token.user?.email);
             localStorage.setItem('id',token.user?.id);
+            localStorage.setItem('userRole',token.user?.userRole);
         }
         return response
     } catch (error) {

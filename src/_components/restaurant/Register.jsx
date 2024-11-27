@@ -75,14 +75,13 @@ const Register=({roleType})=>{
 
   }
 
-
     return (
       <section className="w-full">
         <div className="flex items-center justify-center w-full">
           <div className="lg:w-1/2">
             <div className="p-8 rounded-lg items-center">
               <h1 className="m-2 font-semibold text-3xl">Sign up</h1>
-              <Link href='/dashboard/login' className="m-2 font-semibold text-lg ">or <span className="text-orange-400">login to your account</span></Link>
+              <Link href='/login' className="m-2 font-semibold text-lg ">or <span className="text-orange-400">login to your account</span></Link>
               <form className="mt-4" onSubmit={handleSubmit}>
 
                 <input type="hidden" name="userRole" value={roleType}/>

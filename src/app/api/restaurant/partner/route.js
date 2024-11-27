@@ -160,9 +160,11 @@ export async function POST(request){
 }
 
 
-export async function GET(request){
+export async function GET(request,{params}){
     try {
+        const cityName= params?.getCity
 
+        console.log(cityName)
         const userId = await checkUserToken(request)
         
         const getPartnerItem = await RestaurantModel.find({userId:userId})

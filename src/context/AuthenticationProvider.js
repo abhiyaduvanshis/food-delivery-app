@@ -14,10 +14,12 @@ const  AuthenticationProvider = ({ children }) =>{
             const name = localStorage.getItem('name')
             const email = localStorage.getItem('email')
             const id = localStorage.getItem('id')
+            const userRole = localStorage.getItem('userRole')
             const userData = {
                 'name':name,
                 'email':email,
-                'id':id
+                'id':id,
+                'userRole':userRole
             }
             if(loginUserData){
                 setloginData(userData)
