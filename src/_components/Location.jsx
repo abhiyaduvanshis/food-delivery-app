@@ -4,8 +4,10 @@ import axios from "axios";
 import { useState,useEffect } from "react";
 import { FaMapMarker } from "react-icons/fa";
 import AllowLocationPopup from "./AllowLocationPopup";
+import { useLocation } from "@/context/LocationContext";
 
 const Location=()=>{
+    const {location} = useLocation()
     const router = useRouter()
     const [userCurrentLocation,setUserCurrentLocation]= useState({
         city:null,
@@ -35,6 +37,7 @@ const Location=()=>{
                         'city':locationResponse.data.address.city
                     }
                     localStorage.setItem('userLocation',JSON.stringify(lodationInfo))
+                    location(JSON.stringify(lodationInfo))
                 } catch (error) {
                     setUserCurrentLocation({ ...userCurrentLocation, error: "Geolocation not supported" });
                 }
@@ -61,6 +64,7 @@ const Location=()=>{
 
 
     return (
+        <>
         <button 
             className="
             flex 
@@ -86,11 +90,26 @@ const Location=()=>{
             ):(
                 <> 
                 <FaMapMarker className="text-sm"/>Location 
-                <AllowLocationPopup clickLocation={getCurrentLocation} />
                 </> 
             )}
 
         </button>
+
+        {saveLocationData.city ? 
+            (
+              ''
+            ):(
+                <> 
+               <AllowLocationPopup clickLocation={getCurrentLocation} />
+                </> 
+            )}
+
+
+        
+
+        </>
+
+        
     );
 }
 

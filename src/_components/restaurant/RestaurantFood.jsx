@@ -85,7 +85,7 @@ const RestaurantFood=()=>{
                                         </td>
                                         <td className="border border-slate-300 p-2">
                                             <div className="flex">
-                                                <div className="px-2 text-blue-500"><Link href={`/dashboard/food/${item._id}`}><FaEdit/></Link></div>
+                                                <div className="px-2 text-blue-500"><Link href={`/food_partner/food/${item._id}`}><FaEdit/></Link></div>
                                                 <div className="px-2  text-red-500" onClick={()=>deleteItempopup(item._id)}><FaTrash/></div>
                                             </div>
                                         </td>

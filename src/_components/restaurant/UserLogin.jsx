@@ -5,8 +5,11 @@ import { useEffect, useState } from "react";
 import AuthService from "../../../services/useAuth";
 import {toast } from 'react-toastify';
 import LoadingPopup from "../LoadingPopup";
+import { useAuthenticationContext } from "@/context/AuthenticationProvider";
 
 const UserLogin=()=>{
+
+ const {login } =  useAuthenticationContext()
 
   const router = useRouter()
 
@@ -46,8 +49,8 @@ const UserLogin=()=>{
           const response = await AuthService.RestaurantLogin(formValue)
        
           if(response.data.success===true){
+            login(response.data);
             toast(response.data.message);
-            console.log(response.data.userRole)
             if(response.data.userRole===1){
               router.push(`/food_partner/dashboard`)
             }else if(response.data.userRole===2){

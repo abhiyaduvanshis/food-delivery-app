@@ -12,7 +12,7 @@ const RestaurantLogin= async(postData)=>{
             localStorage.setItem('name',token.user?.name);
             localStorage.setItem('email',token.user?.email);
             localStorage.setItem('id',token.user?.id);
-            localStorage.setItem('userRole',token.user?.userRole);
+            localStorage.setItem('userRole',response.data.userRole);
         }
         return response
     } catch (error) {

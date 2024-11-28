@@ -9,10 +9,10 @@ export async function GET(request,{params}){
     try {
         const cityName= params?.cityId
 
-        console.log(cityName)
+        //console.log(cityName)
         const userId = await checkUserToken(request)
         
-        const getPartnerItem = await RestaurantModel.find({$and:[{userId:userId},{city:cityName}]})
+        const getPartnerItem = await RestaurantModel.find({city:{$regex:cityName, $options: "i" }})
     
         if(!getPartnerItem){
             return NextResponse.json(

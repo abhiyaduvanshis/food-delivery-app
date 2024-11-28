@@ -5,44 +5,45 @@ import { FaMapMarker,FaClock,FaStar } from "react-icons/fa";
 import axios from "axios";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import {useLocation} from "@/context/LocationContext";
 const Restaurants=()=>{
 
     const {city} = useParams()
     const [resturantList,setresturantList] = useState([])
+    const {locationcity} = useLocation()
 
     useEffect(()=>{
-        
-        const fatchBrand = async ()=>{
-  
-          const API_URL = process?.env?.NEXT_PUBLIC_END_POINT_URL;
-          const token = localStorage.getItem('accessToken')
-          const getCity = JSON.parse(localStorage.getItem('userLocation'))
 
-          try {
-  
-            const response = await axios.get(
-              API_URL+'restaurant/partner/city/'+getCity?.city.toLowerCase(),
-                {
-                  headers:{
-                    "Content-Type":"application/json",
-                    "Authorization":`Bearer ${token}`
+        const fatchBrand = async ()=>{
+          if(locationcity){
+            const API_URL = process?.env?.NEXT_PUBLIC_END_POINT_URL;
+            const token = localStorage.getItem('accessToken')
+
+            try {
+              const response = await axios.get(
+                API_URL+'restaurant/partner/city/'+locationcity?.city.toLowerCase(),
+                  {
+                    headers:{
+                      "Content-Type":"application/json",
+                      "Authorization":`Bearer ${token}`
+                    }
                   }
-                }
               )
+      
+              if(response?.data?.success==true){
+                  setresturantList(response?.data?.result)
+              }  
     
-            if(response?.data?.success==true){
-                setresturantList(response?.data?.result)
-            }  
-  
-          }catch (error) {
-            console.log(error)
-          }
+            }catch (error) {
+              console.log(error)
+            }
          
         }
-  
-        fatchBrand();
-  
-    },[])
+      }
+
+      fatchBrand();
+
+    },[locationcity])
 
     return (
       <section className="py-4 xl:py-16 w-full">
@@ -75,13 +76,13 @@ const Restaurants=()=>{
                         <Link href={`/${city ? city : item.city }/${item._id}`}>
                           <div className="p-3">
                               <div className="rounded-md overflow-hidden">
-                                  <img src={`/resturant/partner/${item.image}`} className="rounded-md hover:scale-125 transition-all duration-500 cursor-pointer"/>
+                                  <img src={`/resturant/partner/${item.image}`} className="rounded-md hover:scale-125 transition-all duration-500 cursor-pointer max-h-36 min-h-36 w-full"/>
                               </div>
                               <div className="flex mt-2">
                                   <h2 className="text-black font-bold w-full">{item.name} <span className="text-black font-bold float-right flex justify-between items-center gap-1"><FaStar className="text-sm text-green-500"/> 3.9</span></h2>
                               </div>
                               <div className="w-full mt-2">
-                                  <p className="text-gray-500">{item.description}</p>
+                                  <p className="text-gray-500">{item.description.substring(0,60)}</p>
                               </div>
                               <div className="w-full border border-dashed mt-2"></div>
                               <div className="flex mt-2 justify-between">

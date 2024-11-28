@@ -3,7 +3,7 @@ import RestaurantModel from "@/model/RestaurantModel";
 import { NextResponse } from "next/server";
 import checkUserToken from "@/helpers/checkUserToken";
 import fs from "node:fs/promises";
-import { FaCommentsDollar } from "react-icons/fa";
+
 
 await dbConnect();
 
@@ -160,11 +160,9 @@ export async function POST(request){
 }
 
 
-export async function GET(request,{params}){
+export async function GET(request){
     try {
-        const cityName= params?.getCity
 
-        console.log(cityName)
         const userId = await checkUserToken(request)
         
         const getPartnerItem = await RestaurantModel.find({userId:userId})

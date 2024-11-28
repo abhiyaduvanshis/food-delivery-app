@@ -3,7 +3,7 @@ import FoodByResturant from "@/_components/FoodByResturant";
 import Footer from "@/_components/Footer";
 import Header from "@/_components/Header";
 import InnerBanner from "@/_components/InnerBanner";
-import { useState,useEffect } from "react";
+import { useState,useEffect, useMemo } from "react";
 
 export default function page() {
 
@@ -48,8 +48,14 @@ export default function page() {
   return (
     <>
       <Header cartItem={cartData} removeItem={removeCartData} />
-      <InnerBanner headerName='Restaurant Listing'/>
-      <FoodByResturant clickCart={addToCart} cartItem={cartData} addedFood={cartIds} clickRemoveCart={removeToCart} removeItem={removeCartData} />
+        <InnerBanner headerName='Restaurant Listing'/>
+        <FoodByResturant 
+          clickCart={addToCart} 
+          cartItem={cartData} 
+          addedFood={cartIds} 
+          clickRemoveCart={removeToCart} 
+          removeItem={removeCartData} 
+        />
       <Footer/>
     </>
   );

@@ -5,10 +5,13 @@ import { useEffect, useState,createContext,useContext,useMemo } from "react";
 export const AuthenticationContext = createContext(null)
 
 const  AuthenticationProvider = ({ children }) =>{
+
     const [loginData,setloginData]= useState(null)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    useEffect(()=>{
+    // const [login,setLogin]=useState(null)
+
+    const login =()=>{
         try {
             const loginUserData = localStorage.getItem('accessToken')
             const name = localStorage.getItem('name')
@@ -29,13 +32,20 @@ const  AuthenticationProvider = ({ children }) =>{
         }finally {
             setLoading(false);
         }
-       
+    }
+
+    useEffect(()=>{
+        login()
     },[])
 
 
+    const logOut=()=>{
+        setloginData(null); 
+    }
+
 
     return (
-        <AuthenticationContext.Provider value={{loginData,setloginData,loading, error}}>{children}</AuthenticationContext.Provider>
+        <AuthenticationContext.Provider value={{loginData,loading,error,login,logOut}}>{children}</AuthenticationContext.Provider>
     )
 }
 

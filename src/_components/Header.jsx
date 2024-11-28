@@ -18,7 +18,7 @@ const Header=({cartItem,removeItem})=>{
     const [itemCount,setItemCount] = useState(cartStorage?.length)
     const [cartData,setCartData] = useState(cartStorage)
     
-    const {loginData, loading, error}  = useAuthenticationContext()
+    const {loginData, loading, error,logOut}  = useAuthenticationContext()
 
     const dropdownMenu = () =>{
         setisVisible(!isVisible)
@@ -29,6 +29,7 @@ const Header=({cartItem,removeItem})=>{
     },[])
 
     const logout = () =>{
+        logOut()
         const response = AuthService.UserLogOut()
         console.log(response)
         toast(response?.data?.message)
@@ -45,7 +46,7 @@ const Header=({cartItem,removeItem})=>{
      }, []);
 
 
-    useEffect(()=>{
+     useEffect(()=>{
         if(cartItem){
             if(itemCount){
                 if(cartItem.restId !== cartData[0].restId){
@@ -58,6 +59,7 @@ const Header=({cartItem,removeItem})=>{
                     let localStorageCart=cartData
                     cartItem.quantity =1
                     localStorageCart.push(JSON.parse(JSON.stringify(cartItem)))
+                    console.log(localStorageCart)
                     setCartData(localStorageCart)
                     localStorage.setItem('cart',JSON.stringify(localStorageCart))
                     setItemCount(itemCount+1)
@@ -72,7 +74,7 @@ const Header=({cartItem,removeItem})=>{
     },[cartItem])
 
 
-    useEffect(()=>{
+    useMemo(()=>{
         if(removeItem){
             let localDataFilter = cartData.filter((item)=>{
                 return item.foodId !==removeItem
@@ -126,17 +128,17 @@ const Header=({cartItem,removeItem})=>{
                 {loginData ?     
                 <div className="hidden xl:block">
                     <div className="flex justify-between items-center gap-5">
-                            {loginData ? 
-                            <div>
-                                <ul className="inline-flex gap-4 text-white">
-                                    <li>
-                                        <Link href="/food_partner/dashboard">DashBoard</Link>
-                                    </li>
-                                </ul>
-                            </div> 
-                        : 
-                            ''
-                        }
+                            {loginData.userRole===1 ? 
+                                <div>
+                                    <ul className="inline-flex gap-4 text-white">
+                                        <li>
+                                            <Link href="/food_partner/dashboard">DashBoard</Link>
+                                        </li>
+                                    </ul>
+                                </div> 
+                            : 
+                                ''
+                            }
                         <div className="flex static relative">
                             <FaShoppingCart className="text-white text-1" /> 
                             <span 
@@ -180,4 +182,4 @@ const Header=({cartItem,removeItem})=>{
     );
 }
 
-export default memo(Header);
+export default Header;

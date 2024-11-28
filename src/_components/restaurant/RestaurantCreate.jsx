@@ -59,7 +59,7 @@ const RestaurantCreate=()=>{
                     const response = await userService.updateRestFormData('restaurant/partner/'+pid,formInput,foodImage)
                     if(response.data.success===true){
                         toast(response?.data?.message)
-                        router.push(`/dashboard/restaurant/list`)
+                        router.push(`/food_partner/restaurant/list`)
                     }
                 }else{
                     const response = await userService.addRestFormData('restaurant/partner',formInput,foodImage)

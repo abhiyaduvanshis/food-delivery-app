@@ -15,7 +15,7 @@ export default function Login() {
           </div>
         </div>
       </section>
-      <Footer/>
+    <Footer/>
     </>
   
   );
