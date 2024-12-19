@@ -3,7 +3,7 @@ import FoodByResturant from "@/_components/FoodByResturant";
 import Footer from "@/_components/Footer";
 import Header from "@/_components/Header";
 import InnerBanner from "@/_components/InnerBanner";
-import { useState,useEffect, useMemo } from "react";
+import { useState,useEffect, useMemo, useCallback } from "react";
 
 export default function page() {
 
@@ -13,7 +13,7 @@ export default function page() {
   const [cartIds,setcartIds] = useState([])
   
 
-  const addToCart=(item)=>{
+  const addToCart=useCallback((item)=>{
     setCartData(item)
     const localStorageData = JSON.parse(localStorage.getItem('cart'))
     let localStorageCart=cartIds
@@ -21,14 +21,13 @@ export default function page() {
       localStorageCart.push(valueItem.foodId)
     })
     setremoveCartData()
-  }
+  })
 
-  const removeToCart=(id)=>{
+  const removeToCart=useCallback((id)=>{
     setremoveCartData(id)
     const localIds = cartIds.filter(item=>item!==id)
     setCartData()
- 
-  }
+  })
 
   useEffect(() => {
     if (typeof window !== 'undefined') {

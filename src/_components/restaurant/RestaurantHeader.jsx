@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-
 const RestaurantHeader=()=>{
 
     return (
@@ -21,7 +20,7 @@ const RestaurantHeader=()=>{
                             <Link href="/food_partner/food/create">Add Foods</Link>
                         </li>
                         <li className="py-1 px-2 text-sm border border-s-orange-400 hover:text-orange-400 hover:bg-orange-400 hover:text-white rounded-full">
-                            <Link href="">View Order</Link>
+                            <Link href='/food_partner/customer-order'>View Order</Link>
                         </li>
                     </ul>
                     

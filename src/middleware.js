@@ -7,7 +7,7 @@ export async function middleware(req) {
 
   const currentUser = cookies().get('accessToken')
   const logedinUserNotAccessPath = req.nextUrl.pathname === '/dashboard/login' 
-
+  
   if(logedinUserNotAccessPath){
     if(currentUser){
       return NextResponse.redirect(new URL('/', req.url))
@@ -21,5 +21,5 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ['/','/dashboard/food/:path','/dashboard/restaurant/:path*','/dashboard/food/:path*'],
+  matcher: ['/','/food_partner/:path*'],
 }

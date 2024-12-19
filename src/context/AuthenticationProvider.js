@@ -9,7 +9,7 @@ const  AuthenticationProvider = ({ children }) =>{
     const [loginData,setloginData]= useState(null)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    // const [login,setLogin]=useState(null)
+    //const [login,setLogin]=useState(null)
 
     const login =()=>{
         try {
@@ -38,15 +38,14 @@ const  AuthenticationProvider = ({ children }) =>{
         login()
     },[])
 
-
     const logOut=()=>{
         setloginData(null); 
     }
 
-
     return (
         <AuthenticationContext.Provider value={{loginData,loading,error,login,logOut}}>{children}</AuthenticationContext.Provider>
     )
+
 }
 
 export default AuthenticationProvider

@@ -1,5 +1,6 @@
 
 "use client"
+import Link from "next/link";
 import { memo, useEffect, useState } from "react";
 
 
@@ -29,7 +30,6 @@ const AddToCartBill=({updatedCartItem,removeCartItem})=>{
         setCartData(cartValue)
 
         if(removeCartItem){
-          console.log(removeCartItem.length)
           if(removeCartItem!==null){
             const filteredCardValue = cartData.filter((item)=>{
               return item.foodId!==removeCartItem
@@ -79,6 +79,25 @@ const AddToCartBill=({updatedCartItem,removeCartItem})=>{
                   <p className="text-black flex justify-between mb-2 text-sm">GST + SGST (18%) <span> + Rs. {govTax  ? govTax : '0' }</span></p>
                   <div className="border-b border-solid"></div>
                   <p className="text-black flex justify-between mt-2"><span className="font-semibold">Total</span> <span>Rs. {grandTotal ? grandTotal : '0'}</span></p>
+                </div>
+
+                <div className="mt-4 pt-4 text-center">
+                    <Link 
+                    href="/customer/view_cart" 
+                    className="
+                      w-full
+                      border 
+                      border-green-400    
+                      py-1    
+                      px-4    
+                      rounded-md    
+                      text-white   
+                      font-semibold    
+                      text-md  
+                      bg-green-400  
+                     
+                    "
+                    >Continue</Link>
                 </div>
               </div>
     );

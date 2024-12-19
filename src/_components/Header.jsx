@@ -31,7 +31,6 @@ const Header=({cartItem,removeItem})=>{
     const logout = () =>{
         logOut()
         const response = AuthService.UserLogOut()
-        console.log(response)
         toast(response?.data?.message)
         router.push(`/login`)
     }
@@ -43,10 +42,9 @@ const Header=({cartItem,removeItem})=>{
             setItemCount(cartValue?.length)
             setCartData(cartValue)
         }
-     }, []);
+    }, []);
 
-
-     useEffect(()=>{
+    useEffect(()=>{
         if(cartItem){
             if(itemCount){
                 if(cartItem.restId !== cartData[0].restId){
@@ -73,7 +71,6 @@ const Header=({cartItem,removeItem})=>{
         }
     },[cartItem])
 
-
     useMemo(()=>{
         if(removeItem){
             let localDataFilter = cartData.filter((item)=>{
@@ -87,7 +84,6 @@ const Header=({cartItem,removeItem})=>{
             }
         }
     },[removeItem])
-
 
     if (loading) return <p></p>
     if (error) return <p>Error: {error}</p>
@@ -140,6 +136,7 @@ const Header=({cartItem,removeItem})=>{
                                 ''
                             }
                         <div className="flex static relative">
+                            <Link href="/customer/view_cart">
                             <FaShoppingCart className="text-white text-1" /> 
                             <span 
                             className="
@@ -153,7 +150,7 @@ const Header=({cartItem,removeItem})=>{
                             right-[-7px] 
                             top-[-8px]">
                                 {itemCount?itemCount:0}
-                            </span>
+                            </span></Link>
                         </div>
                         <div  className="text-white/50 text-sm"> | </div>
                         <div className="flex gap-2">
@@ -182,4 +179,4 @@ const Header=({cartItem,removeItem})=>{
     );
 }
 
-export default Header;
+export default memo(Header);
