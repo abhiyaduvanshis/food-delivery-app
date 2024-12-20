@@ -5,9 +5,11 @@ import { NextResponse } from "next/server";
 import checkUserToken from "@/helpers/checkUserToken";
 import ViewCartModel from "@/model/ViewCartModel";
 
-await dbConnect()
+
 
 export async function POST(request) {
+
+    await dbConnect()
     try {
         
         const userId = await checkUserToken(request)
